@@ -1,0 +1,100 @@
+<% const byDay = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']; %>
+<%- include('partials/head') %>
+
+<div class="grid">
+  <div>
+    <section>
+      <h2>Daily Targets</h2>
+      <ul class="cards">
+        <% if (!daily.length) { %><li class="empty">No items</li><% } %>
+        <% daily.forEach(t => { %>
+          <li class="card <%= t.completed ? 'done' : '' %>">
+            <div class="title"><%= t.title %></div>
+            <% if (t.description) { %><div class="desc"><%= t.description %></div><% } %>
+            <% if (t.due_date) { %><div class="meta">Due: <%= t.due_date %></div><% } %>
+            <form method="post" action="/targets/<%= t.id %>/complete"><button <%= t.completed?'disabled':'' %>>Mark Done</button></form>
+            <a href="/targets/<%= t.id %>/edit">Edit</a>
+            <form method="post" action="/targets/<%= t.id %>/delete" onsubmit="return confirm('Delete?')"><button class="danger">Delete</button></form>
+          </li>
+        <% }) %>
+      </ul>
+    </section>
+  </div>
+
+  <div>
+    <section>
+      <h2>Weekly Targets</h2>
+      <ul class="cards">
+        <% if (!weekly.length) { %><li class="empty">No items</li><% } %>
+        <% weekly.forEach(t => { %>
+          <li class="card <%= t.completed ? 'done' : '' %>">
+            <div class="title"><%= t.title %></div>
+            <% if (t.description) { %><div class="desc"><%= t.description %></div><% } %>
+            <% if (t.due_date) { %><div class="meta">Due: <%= t.due_date %></div><% } %>
+            <form method="post" action="/targets/<%= t.id %>/complete"><button <%= t.completed?'disabled':'' %>>Mark Done</button></form>
+            <a href="/targets/<%= t.id %>/edit">Edit</a>
+            <form method="post" action="/targets/<%= t.id %>/delete" onsubmit="return confirm('Delete?')"><button class="danger">Delete</button></form>
+          </li>
+        <% }) %>
+      </ul>
+    </section>
+  </div>
+</div>
+
+<section>
+  <h2>Monthly Targets</h2>
+  <ul class="cards">
+    <% if (!monthly.length) { %><li class="empty">No items</li><% } %>
+    <% monthly.forEach(t => { %>
+      <li class="card <%= t.completed ? 'done' : '' %>">
+        <div class="title"><%= t.title %></div>
+        <% if (t.description) { %><div class="desc"><%= t.description %></div><% } %>
+        <% if (t.due_date) { %><div class="meta">Due: <%= t.due_date %></div><% } %>
+        <form method="post" action="/targets/<%= t.id %>/complete"><button <%= t.completed?'disabled':'' %>>Mark Done</button></form>
+        <a href="/targets/<%= t.id %>/edit">Edit</a>
+        <form method="post" action="/targets/<%= t.id %>/delete" onsubmit="return confirm('Delete?')"><button class="danger">Delete</button></form>
+      </li>
+    <% }) %>
+  </ul>
+  </section>
+
+<section>
+  <h2>Yearly Targets</h2>
+  <ul class="cards">
+    <% if (!yearly.length) { %><li class="empty">No items</li><% } %>
+    <% yearly.forEach(t => { %>
+      <li class="card <%= t.completed ? 'done' : '' %>">
+        <div class="title"><%= t.title %></div>
+        <% if (t.description) { %><div class="desc"><%= t.description %></div><% } %>
+        <% if (t.due_date) { %><div class="meta">Due: <%= t.due_date %></div><% } %>
+        <form method="post" action="/targets/<%= t.id %>/complete"><button <%= t.completed?'disabled':'' %>>Mark Done</button></form>
+        <a href="/targets/<%= t.id %>/edit">Edit</a>
+        <form method="post" action="/targets/<%= t.id %>/delete" onsubmit="return confirm('Delete?')"><button class="danger">Delete</button></form>
+      </li>
+    <% }) %>
+  </ul>
+</section>
+
+<section>
+  <h2>Timetable</h2>
+  <table class="timetable">
+    <thead><tr><th>Day</th><th>Start</th><th>End</th><th>Subject</th><th>Notes</th><th></th></tr></thead>
+    <tbody>
+      <% timetable.forEach(e => { %>
+        <tr>
+          <td><%= byDay[e.day_of_week] %></td>
+          <td><%= e.start_time %></td>
+          <td><%= e.end_time %></td>
+          <td><%= e.subject %></td>
+          <td><%= e.notes || '' %></td>
+          <td>
+            <a href="/timetable/<%= e.id %>/edit">Edit</a>
+            <form method="post" action="/timetable/<%= e.id %>/delete" onsubmit="return confirm('Delete?')"><button class="danger">Delete</button></form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</section>
+
+<%- include('partials/footer') %>

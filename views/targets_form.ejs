@@ -1,0 +1,26 @@
+<% const isEdit = !!(target && target.id); %>
+<%- include('partials/head') %>
+<form method="post" action="<%= isEdit ? '/targets/' + target.id : '/targets' %>" class="form">
+  <h2><%= isEdit ? 'Edit Target' : 'New Target' %></h2>
+  <label>Title
+    <input type="text" name="title" value="<%= target ? target.title : '' %>" required />
+  </label>
+  <label>Description
+    <textarea name="description"><%= target ? target.description || '' : '' %></textarea>
+  </label>
+  <label>Timeframe
+    <select name="timeframe" required>
+      <% ['daily','weekly','monthly','yearly'].forEach(tf => { %>
+        <option value="<%= tf %>" <%= target && target.timeframe===tf ? 'selected' : '' %>><%= tf %></option>
+      <% }) %>
+    </select>
+  </label>
+  <label>Due date (optional)
+    <input type="date" name="due_date" value="<%= target ? (target.due_date || '') : '' %>" />
+  </label>
+  <div class="actions">
+    <button type="submit"><%= isEdit ? 'Save' : 'Create' %></button>
+    <a href="/">Cancel</a>
+  </div>
+  </form>
+<%- include('partials/footer') %>
