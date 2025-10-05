@@ -1,0 +1,36 @@
+<%- include('partials/head') %>
+<form method="get" action="/search" class="form">
+  <h2>Create Target from Web Search</h2>
+  <label>Search query
+    <input type="text" name="q" value="<%= q || '' %>" placeholder="e.g., UPSC polity notes" />
+  </label>
+  <div class="actions">
+    <button type="submit">Search</button>
+    <a href="/">Back</a>
+  </div>
+</form>
+
+<% if (results && results.length) { %>
+  <section>
+    <h3>Results</h3>
+    <ul class="cards">
+      <% results.forEach(r => { %>
+        <li class="card">
+          <div class="title"><a href="<%= r.url %>" target="_blank" rel="noopener noreferrer"><%= r.title %></a></div>
+          <form method="post" action="/targets/from-search" class="inline">
+            <input type="hidden" name="title" value="<%= r.title %>" />
+            <input type="hidden" name="url" value="<%= r.url %>" />
+            <select name="timeframe">
+              <option value="daily">daily</option>
+              <option value="weekly" selected>weekly</option>
+              <option value="monthly">monthly</option>
+              <option value="yearly">yearly</option>
+            </select>
+            <button type="submit">Add as Target</button>
+          </form>
+        </li>
+      <% }) %>
+    </ul>
+  </section>
+<% } %>
+<%- include('partials/footer') %>

@@ -1,0 +1,29 @@
+<% const isEdit = !!(entry && entry.id); %>
+<%- include('partials/head') %>
+<form method="post" action="<%= isEdit ? '/timetable/' + entry.id : '/timetable' %>" class="form">
+  <h2><%= isEdit ? 'Edit Timetable Entry' : 'New Timetable Entry' %></h2>
+  <label>Day of week
+    <select name="day_of_week" required>
+      <% ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'].forEach((d, idx) => { %>
+        <option value="<%= idx %>" <%= entry && entry.day_of_week===idx ? 'selected' : '' %>><%= d %></option>
+      <% }) %>
+    </select>
+  </label>
+  <label>Start time
+    <input type="time" name="start_time" value="<%= entry ? entry.start_time : '' %>" required />
+  </label>
+  <label>End time
+    <input type="time" name="end_time" value="<%= entry ? entry.end_time : '' %>" required />
+  </label>
+  <label>Subject
+    <input type="text" name="subject" value="<%= entry ? entry.subject : '' %>" required />
+  </label>
+  <label>Notes
+    <textarea name="notes"><%= entry ? entry.notes || '' : '' %></textarea>
+  </label>
+  <div class="actions">
+    <button type="submit"><%= isEdit ? 'Save' : 'Create' %></button>
+    <a href="/">Cancel</a>
+  </div>
+  </form>
+<%- include('partials/footer') %>
